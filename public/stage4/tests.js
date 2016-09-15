@@ -23,7 +23,11 @@ describe('ステージ4（意図通りにイベントを利用できる）', fun
       // });
       //
       // ここに上記のどちらかのコードを記述してください。
-
+      
+      var element = document.getElementById('firebrick');
+      element.addEventListener('click', function() {
+        element.textContent = Number(element.textContent) + 1;
+      });
 
       var firebrick = document.getElementById('firebrick');
       firebrick.dispatchEvent(createClickEvent());
@@ -37,7 +41,10 @@ describe('ステージ4（意図通りにイベントを利用できる）', fun
     it('2 番の要素の click イベントで要素内の数字を 1 ずつ小さくできる', function() {
 
       // ここにコードを記述してください。
-
+      $('#chocolate').on('click', function(event) {
+        var $target = $(event.target);
+        $target.text(Number($target.text()) - 1);
+      });
 
       var chocolate = document.getElementById('chocolate');
       chocolate.dispatchEvent(createClickEvent());
@@ -49,8 +56,15 @@ describe('ステージ4（意図通りにイベントを利用できる）', fun
 
 
     it('3 番の要素の click イベントで要素を 10 度ずつ回転できる', function() {
+      var deg = 0;
 
       // ここにコードを記述してください。
+      $('.mediumseagreen').on('click', function(event) {
+        var $target = $(event.target);
+        deg += 10;
+        deg %= 360;
+        $target.css('transform', 'rotate(' + deg + 'deg)');
+      });
 
 
       var mediumseagreen = document.querySelector('.mediumseagreen');
@@ -67,7 +81,10 @@ describe('ステージ4（意図通りにイベントを利用できる）', fun
     it('4 番の要素を入力された角度に回転できる', function() {
 
       // ここにコードを記述してください。
-
+      $('input').on('change', function(event) {
+        var deg = $(this).val();
+        $('.turquoise').css('transform', 'rotate(' + deg + 'deg)');
+      });
 
       var turquoise = document.querySelector('.turquoise');
       var turquoiseInput = turquoise.querySelector('input');
@@ -93,9 +110,9 @@ describe('ステージ4（意図通りにイベントを利用できる）', fun
       // なお、expect(steelblue).to.be.null は上記のテストの要件を満たして
       // いないので、正解ではありません。
 
+      done();
       var steelblue = document.querySelector('.steelblue');
       expect(steelblue).to.have.property('textContent', '5 \uD83D\uDC33');
-      done();
     });
   });
 });
